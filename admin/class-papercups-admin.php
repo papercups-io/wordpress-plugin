@@ -20,7 +20,8 @@
  * @subpackage Papercups/admin
  * @author     Zmago <zmago_devetak@yahoo.com>
  */
-class Papercups_Admin {
+class Papercups_Admin
+{
 
 	/**
 	 * The ID of this plugin.
@@ -47,11 +48,11 @@ class Papercups_Admin {
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -59,7 +60,8 @@ class Papercups_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -73,8 +75,7 @@ class Papercups_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/papercups-admin.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/papercups-admin.css', array(), $this->version, 'all');
 	}
 
 	/**
@@ -82,7 +83,8 @@ class Papercups_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -96,8 +98,36 @@ class Papercups_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/papercups-admin.js', array( 'jquery' ), $this->version, false );
-
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/papercups-admin.js', array('jquery'), $this->version, false);
 	}
 
+	/**
+	 * Register the administration menu for the plugin into the WordPress Dashboard menu.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_plugin_admin_menu()
+	{
+		/*
+		 * Add a settings page for this plugin to the Settings menu.
+		 */
+		add_menu_page(
+			__('Papercups', $this->plugin_name),
+			__('Papercups', $this->plugin_name),
+			'manage_options',
+			$this->plugin_name,
+			array($this, 'display_plugin_admin_page'),
+			'dashicons-admin-comments'
+		);
+	}
+
+	/**
+	 * Render the settings page for this plugin.
+	 *
+	 * @since    1.0.0
+	 */
+	public function display_plugin_admin_page()
+	{
+		require plugin_dir_path(dirname(__FILE__)) . 'admin/partials/papercups-admin-display.php';
+	}
 }
