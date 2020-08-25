@@ -10,7 +10,7 @@
 				newMessagePlaceholder: papercupsVars.newMessagePlaceholder,
 				primaryColor: papercupsVars.primaryColor,
 				greeting: papercupsVars.greeting,
-				baseUrl: 'https://app.papercups.io',
+				baseUrl: papercupsVars.baseUrl,
 				requireEmailUpfront: papercupsVars.requireEmailUpfront,
 			},
 		};

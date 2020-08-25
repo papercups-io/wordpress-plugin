@@ -60,21 +60,8 @@ class Papercups_Admin
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles()
-	{
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Papercups_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Papercups_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
+	public function enqueue_styles() {
+    wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/papercups-admin.css', array(), $this->version, 'all');
 	}
 
@@ -83,51 +70,175 @@ class Papercups_Admin
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts()
-	{
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Papercups_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Papercups_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/papercups-admin.js', array('jquery'), $this->version, false);
+	public function enqueue_scripts(){
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/papercups-admin.js', array('jquery', 'wp-color-picker'), $this->version, false);
 	}
 
-	/**
-	 * Register the administration menu for the plugin into the WordPress Dashboard menu.
-	 *
-	 * @since    1.0.0
-	 */
-	public function add_plugin_admin_menu()
-	{
-		/*
-		 * Add a settings page for this plugin to the Settings menu.
-		 */
-		add_menu_page(
-			__('Papercups', $this->plugin_name),
-			__('Papercups', $this->plugin_name),
-			'manage_options',
-			$this->plugin_name,
-			array($this, 'display_plugin_admin_page'),
-			'dashicons-admin-comments'
-		);
-	}
+  function init_settings() {
+    $this->register_settings();
 
-	/**
-	 * Render the settings page for this plugin.
-	 *
-	 * @since    1.0.0
-	 */
-	public function display_plugin_admin_page()
-	{
-		require plugin_dir_path(dirname(__FILE__)) . 'admin/partials/papercups-admin-display.php';
-	}
+    settings_fields('papercups_widget_setting');
+    do_settings_fields('papercups_account_id', 'papercups_widget_setting');
+    add_settings_section(
+        'papercups_settings_section',
+        'Papercups Settings Section',
+        array($this, 'settings_section_cb'),
+        'general'
+    );
+
+    $this->add_settings_fields();
+  }
+
+  private function register_settings() {
+    register_setting('general', 'papercups_account_id');
+    register_setting('general', 'papercups_widget_title');
+    register_setting('general', 'papercups_widget_subtitle');
+    register_setting('general', 'papercups_new_message_placeholder');
+    register_setting('general', 'papercups_greeting');
+    register_setting('general', 'papercups_primary_color');
+    register_setting('general', 'papercups_require_email_upfront');
+    register_setting('general', 'papercups_base_url', array('default' => 'https://app.papercups.io'));
+  }
+
+  private function add_settings_fields() {
+    add_settings_field(
+      'papercups_account_id',
+      __('Papercups accound ID', $this->plugin_name),
+      array($this, 'text_input_callback'),
+      'general',
+      'papercups_settings_section',
+      array(
+        'type'      => 'text',
+        'value'     => get_option('papercups_account_id'),
+        'class'     => 'regular-text ltr',
+        'label_for' => 'papercups_account_id',
+        'tip'       => __('You can your account ID on papercups app dashboard', $this->plugin_name)
+      ),
+    );
+
+    add_settings_field(
+      'papercups_base_url',
+      __('Papercups app base URL', $this->plugin_name),
+      array($this, 'text_input_callback'),
+      'general',
+      'papercups_settings_section',
+      array(
+        'type'      => 'text',
+        'value'     => get_option('papercups_base_url'),
+        'class'     => 'regular-text ltr',
+        'label_for' => 'papercups_base_url',
+        'tip'       => __('Change this if you have your own instance', $this->plugin_name)
+      ),
+    );
+
+    add_settings_field(
+      'papercups_widget_title',
+      __('Widget title', $this->plugin_name),
+      array($this, 'text_input_callback'),
+      'general',
+      'papercups_settings_section',
+      array(
+        'type'      => 'text',
+        'value'     => get_option('papercups_widget_title'),
+        'class'     => 'regular-text ltr',
+        'label_for' => 'papercups_widget_title',
+        'tip'       => __('Set widget title', $this->plugin_name)
+      ),
+    );
+
+    add_settings_field(
+      'papercups_widget_subtitle',
+      __('Widget subtitle', $this->plugin_name),
+      array($this, 'text_input_callback'),
+      'general',
+      'papercups_settings_section',
+      array(
+        'type'      => 'text',
+        'value'     => get_option('papercups_widget_subtitle'),
+        'class'     => 'regular-text ltr',
+        'label_for' => 'papercups_widget_subtitle',
+        'tip'       => __('Set widget subtitle', $this->plugin_name)
+      ),
+    );
+
+    add_settings_field(
+      'papercups_new_message_placeholder',
+      __('New message placeholder', $this->plugin_name),
+      array($this, 'text_input_callback'),
+      'general',
+      'papercups_settings_section',
+      array(
+        'type'      => 'text',
+        'value'     => get_option('papercups_new_message_placeholder'),
+        'class'     => 'regular-text ltr',
+        'label_for' => 'papercups_new_message_placeholder',
+        'tip'       => __('Set new message placeholder', $this->plugin_name)
+      ),
+    );
+
+    add_settings_field(
+      'papercups_greeting',
+      __('Greeting', $this->plugin_name),
+      array($this, 'text_input_callback'),
+      'general',
+      'papercups_settings_section',
+      array(
+        'type'      => 'text',
+        'value'     => get_option('papercups_greeting'),
+        'class'     => 'regular-text ltr',
+        'label_for' => 'papercups_greeting',
+        'tip'       => __('Set greeting message', $this->plugin_name)
+      ),
+    );
+
+    add_settings_field(
+      'papercups_primary_color',
+      __('Widget primary color', $this->plugin_name),
+      array($this, 'text_input_callback'),
+      'general',
+      'papercups_settings_section',
+      array(
+        'type'      => 'text',
+        'value'     => get_option('papercups_primary_color'),
+        'class'     => 'papercups-color-picker',
+        'label_for' => 'papercups_primary_color',
+        'tip'       => __('Choose widget color', $this->plugin_name)
+      ),
+    );
+
+    add_settings_field(
+      'papercups_require_email_upfront',
+      __('Require email upfront', $this->plugin_name),
+      array($this, 'checkbox_input_callback'),
+      'general',
+      'papercups_settings_section',
+      array(
+        'type'      => 'checkbox',
+        'value'     => get_option('papercups_require_email_upfront'),
+        'class'     => 'regular-text ltr',
+        'label_for' => 'papercups_require_email_upfront',
+        'tip'       => __('Check if you want to require the email upfront', $this->plugin_name)
+      ),
+    );
+  }
+
+  function settings_section_cb($arg) {
+    echo __('Here you can add configuration settings for you Papercups widget', $this->plugin_name);
+  }
+
+  function text_input_callback($args) {
+    $html = '<input id="' . esc_attr($args['label_for']) . '" type="' . esc_attr($args['type']) . '"';
+    $html .= ' value="' . esc_attr($args['value']) . '" class="' . $args['class'] . '" name="' . $args['label_for']  . '"/>';
+    $html .= '<p class="description">'. esc_attr( $args['tip'] ) .'</p>';
+
+    echo $html;
+  }
+
+  function checkbox_input_callback($args) {
+    echo '<input type="' . $args['type']  . '" id="' . $args['label_for'] . '" value="1" name="' . $args['label_for']  . '"';
+    if ($args['value'] == '1') {
+      echo ' checked';
+    }
+    echo '/>';
+  }
 }

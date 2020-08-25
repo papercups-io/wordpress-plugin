@@ -55,57 +55,22 @@ class Papercups_Public {
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Papercups_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Papercups_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/papercups-public.css', array(), $this->version, 'all' );
-
-	}
-
-	/**
 	 * Register the JavaScript for the public-facing side of the site.
 	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Papercups_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Papercups_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/papercups-public.js', array( 'jquery' ), $this->version, false );
-    wp_localize_script( $this->plugin_name, 'papercupsVars',
+		wp_enqueue_script($this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/papercups-public.js', array( 'jquery' ), $this->version, false);
+    wp_localize_script($this->plugin_name, 'papercupsVars',
         array(
-           'accountId'             => 'xxx', // @TODO query from stored value
-           'title'                 => __( 'Welcome to Papercups!', 'papercups' ),
-           'subtitle'              => __( 'Ask us anything in the chat window below 😊', 'papercups' ),
-           'newMessagePlaceholder' => __( 'Start typing...', 'papercups' ),
-           'primaryColor'          => '#13c2c2',  // @TODO query from stored value
-           'greeting'              => __( 'Hi there! How can I help you?', 'papercups' ),
-           'requireEmailUpfront'   => true, // @TODO query from stored value
+           'accountId'             => get_option('papercups_account_id'),
+           'title'                 => get_option('papercups_widget_title'),
+           'subtitle'              => get_option('papercups_widget_subtitle'),
+           'newMessagePlaceholder' => get_option('papercups_new_message_placeholder'),
+           'primaryColor'          => get_option('papercups_primary_color'),
+           'greeting'              => get_option('papercups_greeting'),
+           'requireEmailUpfront'   => get_option('papercups_require_email_upfront'),
+           'baseUrl'               => get_option('papercups_base_url')
         )
     );
 	}
