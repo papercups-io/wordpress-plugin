@@ -14,3 +14,6 @@
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+<div class="papercups-admin">
+    <h2>Papercups Admin Page</h2>
+</div>

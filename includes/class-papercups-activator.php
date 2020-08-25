@@ -20,7 +20,8 @@
  * @subpackage Papercups/includes
  * @author     Zmago <zmago_devetak@yahoo.com>
  */
-class Papercups_Activator {
+class Papercups_Activator
+{
 
 	/**
 	 * Short Description. (use period)
@@ -29,8 +30,8 @@ class Papercups_Activator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function activate() {
-
+	public static function activate()
+	{
+		add_option('papercups_app_id');
 	}
-
 }
