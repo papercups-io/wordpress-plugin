@@ -97,7 +97,32 @@ class Papercups_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/papercups-public.js', array( 'jquery' ), $this->version, false );
-
+    wp_localize_script( $this->plugin_name, 'papercupsVars',
+        array(
+           'accountId'             => 'xxx', // @TODO query from stored value
+           'title'                 => __( 'Welcome to Papercups!', 'papercups' ),
+           'subtitle'              => __( 'Ask us anything in the chat window below 😊', 'papercups' ),
+           'newMessagePlaceholder' => __( 'Start typing...', 'papercups' ),
+           'primaryColor'          => '#13c2c2',  // @TODO query from stored value
+           'greeting'              => __( 'Hi there! How can I help you?', 'papercups' ),
+           'requireEmailUpfront'   => true, // @TODO query from stored value
+        )
+    );
 	}
 
+	/**
+	 * Insert widget script in header.
+	 *
+	 * @since    1.0.0
+	 */
+
+	 public function header_script() {
+	    ?>
+          <script type="text/javascript"
+                   async
+                   defer
+                   src="https://app.papercups.io/widget.js">
+           </script>
+       <?php
+	 }
 }
