@@ -103,7 +103,7 @@ class Papercups_Admin
   private function add_settings_fields() {
     add_settings_field(
       'papercups_account_id',
-      __('Papercups accound ID', $this->plugin_name),
+      __('Papercups account ID', $this->plugin_name),
       array($this, 'text_input_callback'),
       'general',
       'papercups_settings_section',
@@ -112,7 +112,7 @@ class Papercups_Admin
         'value'     => get_option('papercups_account_id'),
         'class'     => 'regular-text ltr',
         'label_for' => 'papercups_account_id',
-        'tip'       => __('You can your account ID on papercups app dashboard', $this->plugin_name)
+        'tip'       => __('You can get your account ID in the Papercups dashboard', $this->plugin_name)
       ),
     );
 
