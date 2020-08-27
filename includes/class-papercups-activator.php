@@ -23,15 +23,15 @@
 class Papercups_Activator
 {
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function activate()
-	{
-		add_option('papercups_app_id');
-	}
+  /**
+   * Short Description. (use period)
+   *
+   * Long Description.
+   *
+   * @since    1.0.0
+   */
+  public static function activate()
+  {
+    add_option('papercups_app_id');
+  }
 }

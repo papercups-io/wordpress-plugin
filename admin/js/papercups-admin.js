@@ -1,8 +1,7 @@
-(function( $ ) {
-	'use strict';
+(function ($) {
+  'use strict';
 
-	$(document).ready(function($){
-		$('.papercups-color-picker').iris();
-	});
-
-})( jQuery );
+  $(document).ready(function ($) {
+    $('.papercups-color-picker').iris();
+  });
+})(jQuery);

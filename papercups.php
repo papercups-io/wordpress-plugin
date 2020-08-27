@@ -27,7 +27,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die;
+  die;
 }
 
 /**
@@ -42,8 +42,8 @@ define( 'PAPERCUPS_VERSION', '1.0.0' );
  * This action is documented in includes/class-papercups-activator.php
  */
 function activate_papercups() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-papercups-activator.php';
-	Papercups_Activator::activate();
+  require_once plugin_dir_path( __FILE__ ) . 'includes/class-papercups-activator.php';
+  Papercups_Activator::activate();
 }
 
 /**
@@ -51,8 +51,8 @@ function activate_papercups() {
  * This action is documented in includes/class-papercups-deactivator.php
  */
 function deactivate_papercups() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-papercups-deactivator.php';
-	Papercups_Deactivator::deactivate();
+  require_once plugin_dir_path( __FILE__ ) . 'includes/class-papercups-deactivator.php';
+  Papercups_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_papercups' );
@@ -75,8 +75,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-papercups.php';
  */
 function run_papercups() {
 
-	$plugin = new Papercups();
-	$plugin->run();
+  $plugin = new Papercups();
+  $plugin->run();
 
 }
 run_papercups();
