@@ -23,73 +23,77 @@
 class Papercups_Admin
 {
 
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
+  /**
+   * The ID of this plugin.
+   *
+   * @since    1.0.0
+   * @access   private
+   * @var      string    $plugin_name    The ID of this plugin.
+   */
+  private $plugin_name;
 
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
+  /**
+   * The version of this plugin.
+   *
+   * @since    1.0.0
+   * @access   private
+   * @var      string    $version    The current version of this plugin.
+   */
+  private $version;
 
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
-	 */
-	public function __construct($plugin_name, $version)
-	{
+  /**
+   * Initialize the class and set its properties.
+   *
+   * @since    1.0.0
+   * @param      string    $plugin_name       The name of this plugin.
+   * @param      string    $version    The version of this plugin.
+   */
+  public function __construct($plugin_name, $version)
+  {
 
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-	}
+    $this->plugin_name = $plugin_name;
+    $this->version = $version;
+  }
 
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-    wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/papercups-admin.css', array(), $this->version, 'all');
-	}
+  /**
+   * Register the stylesheets for the admin area.
+   *
+   * @since    1.0.0
+   */
+  public function enqueue_styles()
+  {
+    wp_enqueue_style('wp-color-picker');
+    wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/papercups-admin.css', array(), $this->version, 'all');
+  }
 
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts(){
-		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/papercups-admin.js', array('jquery', 'wp-color-picker'), $this->version, false);
-	}
+  /**
+   * Register the JavaScript for the admin area.
+   *
+   * @since    1.0.0
+   */
+  public function enqueue_scripts()
+  {
+    wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/papercups-admin.js', array('jquery', 'wp-color-picker'), $this->version, false);
+  }
 
-  function init_settings() {
+  function init_settings()
+  {
     $this->register_settings();
 
     settings_fields('papercups_widget_setting');
     do_settings_fields('papercups_account_id', 'papercups_widget_setting');
     add_settings_section(
-        'papercups_settings_section',
-        'Papercups Settings Section',
-        array($this, 'settings_section_cb'),
-        'general'
+      'papercups_settings_section',
+      'Papercups Settings Section',
+      array($this, 'settings_section_cb'),
+      'general'
     );
 
     $this->add_settings_fields();
   }
 
-  private function register_settings() {
+  private function register_settings()
+  {
     register_setting('general', 'papercups_account_id');
     register_setting('general', 'papercups_widget_title');
     register_setting('general', 'papercups_widget_subtitle');
@@ -100,7 +104,8 @@ class Papercups_Admin
     register_setting('general', 'papercups_base_url', array('default' => 'https://app.papercups.io'));
   }
 
-  private function add_settings_fields() {
+  private function add_settings_fields()
+  {
     add_settings_field(
       'papercups_account_id',
       __('Papercups account ID', $this->plugin_name),
@@ -222,19 +227,22 @@ class Papercups_Admin
     );
   }
 
-  function settings_section_cb($arg) {
-    echo __('Here you can add configuration settings for you Papercups widget', $this->plugin_name);
+  function settings_section_cb($arg)
+  {
+    echo __('Here you can add configuration settings for your Papercups widget', $this->plugin_name);
   }
 
-  function text_input_callback($args) {
+  function text_input_callback($args)
+  {
     $html = '<input id="' . esc_attr($args['label_for']) . '" type="' . esc_attr($args['type']) . '"';
     $html .= ' value="' . esc_attr($args['value']) . '" class="' . $args['class'] . '" name="' . $args['label_for']  . '"/>';
-    $html .= '<p class="description">'. esc_attr( $args['tip'] ) .'</p>';
+    $html .= '<p class="description">' . esc_attr($args['tip']) . '</p>';
 
     echo $html;
   }
 
-  function checkbox_input_callback($args) {
+  function checkbox_input_callback($args)
+  {
     echo '<input type="' . $args['type']  . '" id="' . $args['label_for'] . '" value="1" name="' . $args['label_for']  . '"';
     if ($args['value'] == '1') {
       echo ' checked';
