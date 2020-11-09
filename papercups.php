@@ -8,17 +8,17 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              app.papercups.io/demo
+ * @link              https://app.papercups.io/demo
  * @since             1.0.0
  * @package           Papercups
  *
  * @wordpress-plugin
  * Plugin Name:       Papercups Live Chat
- * Plugin URI:        app.papercups.io/demo
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Plugin URI:        https://app.papercups.io/demo
+ * Description:       This plugin allows you to embed the Papercups chat widget on your website.
  * Version:           1.0.0
- * Author:            Zmago
- * Author URI:        app.papercups.io/demo
+ * Author:            Papercups
+ * Author URI:        https://papercups.io
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       papercups
