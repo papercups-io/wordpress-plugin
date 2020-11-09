@@ -84,7 +84,7 @@ class Papercups_Admin
     do_settings_fields('papercups_account_id', 'papercups_widget_setting');
     add_settings_section(
       'papercups_settings_section',
-      'Papercups Settings Section',
+      'Papercups Settings',
       array($this, 'settings_section_cb'),
       'general'
     );
@@ -95,11 +95,11 @@ class Papercups_Admin
   private function register_settings()
   {
     register_setting('general', 'papercups_account_id');
-    register_setting('general', 'papercups_widget_title');
-    register_setting('general', 'papercups_widget_subtitle');
-    register_setting('general', 'papercups_new_message_placeholder');
+    register_setting('general', 'papercups_widget_title', array('default' => 'Welcome!'));
+    register_setting('general', 'papercups_widget_subtitle', array('default' => 'How can we help you?'));
+    register_setting('general', 'papercups_new_message_placeholder', array('default' => 'Start typing...'));
     register_setting('general', 'papercups_greeting');
-    register_setting('general', 'papercups_primary_color');
+    register_setting('general', 'papercups_primary_color', array('default' => '#1890ff'));
     register_setting('general', 'papercups_require_email_upfront');
     register_setting('general', 'papercups_base_url', array('default' => 'https://app.papercups.io'));
   }
@@ -147,7 +147,7 @@ class Papercups_Admin
         'value'     => get_option('papercups_widget_title'),
         'class'     => 'regular-text ltr',
         'label_for' => 'papercups_widget_title',
-        'tip'       => __('Set widget title', $this->plugin_name)
+        'tip'       => __('The title at the top of the chat widget', $this->plugin_name)
       ),
     );
 
@@ -162,7 +162,7 @@ class Papercups_Admin
         'value'     => get_option('papercups_widget_subtitle'),
         'class'     => 'regular-text ltr',
         'label_for' => 'papercups_widget_subtitle',
-        'tip'       => __('Set widget subtitle', $this->plugin_name)
+        'tip'       => __('The message below the title in the chat widget', $this->plugin_name)
       ),
     );
 
@@ -177,7 +177,7 @@ class Papercups_Admin
         'value'     => get_option('papercups_new_message_placeholder'),
         'class'     => 'regular-text ltr',
         'label_for' => 'papercups_new_message_placeholder',
-        'tip'       => __('Set new message placeholder', $this->plugin_name)
+        'tip'       => __('The placeholder text for the message input', $this->plugin_name)
       ),
     );
 
@@ -192,7 +192,7 @@ class Papercups_Admin
         'value'     => get_option('papercups_greeting'),
         'class'     => 'regular-text ltr',
         'label_for' => 'papercups_greeting',
-        'tip'       => __('Set greeting message', $this->plugin_name)
+        'tip'       => __('Set the greeting message (optional)', $this->plugin_name)
       ),
     );
 
@@ -207,7 +207,7 @@ class Papercups_Admin
         'value'     => get_option('papercups_primary_color'),
         'class'     => 'papercups-color-picker',
         'label_for' => 'papercups_primary_color',
-        'tip'       => __('Choose widget color', $this->plugin_name)
+        'tip'       => __('Choose the theme color', $this->plugin_name)
       ),
     );
 
@@ -229,7 +229,7 @@ class Papercups_Admin
 
   function settings_section_cb($arg)
   {
-    echo __('Here you can add configuration settings for your Papercups widget', $this->plugin_name);
+    echo __('Add the configuration settings for your Papercups widget here.', $this->plugin_name);
   }
 
   function text_input_callback($args)
